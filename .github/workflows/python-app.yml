@@ -28,6 +28,11 @@ jobs:
       - name: Create database directory
         run: |
           mkdir -p backend/App
+
+      - name: Check database path
+        run: |
+          echo "Database path: $(pwd)/backend/App/accounts.db"
+          touch backend/App/accounts.db
       
       - name: Start Flask server
         run: |
