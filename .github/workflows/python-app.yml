@@ -24,13 +24,6 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r backend/App/requirements.txt
-          
-      - name: Start Flask server
-        run: |
-          nohup python backend/App/endPoints.py &
-        env:
-          FLASK_APP: backend/App/endPoints.py
-          FLASK_ENV: development
 
       # - name: Create database directory
       #   run: |
@@ -39,7 +32,14 @@ jobs:
       - name: Check database path
         run: |
           echo "Database path: $(pwd)/backend/App/accounts.db"
-          # touch backend/App/accounts.db
+          touch backend/App/accounts.db
+
+      - name: Start Flask server
+        run: |
+          nohup python backend/App/endPoints.py &
+        env:
+          FLASK_APP: backend/App/endPoints.py
+          FLASK_ENV: development
       
       - name: Run tests
         run: |
