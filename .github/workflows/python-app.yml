@@ -27,5 +27,4 @@ jobs:
 
       - name: Run tests
         run: |
-          export pythonpath=./backend/Tests/tests.py
-          pytest
+          pytest backend/Tests/tests.py
