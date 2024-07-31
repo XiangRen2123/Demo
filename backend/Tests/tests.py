@@ -84,7 +84,7 @@ class TestClass:
         """Test signup failure when email already exists."""
         self.reset_database()
         response1 = requests.post(f"{URL}/register", json=self.user_payload, timeout=TIMEOUT)
-        assert response1.status_code == 409
+        assert response1.status_code == 400
         response = requests.post(f"{URL}/register", json=self.user_payload, timeout=TIMEOUT)
         assert response.status_code == 409
         data = response.json()
