@@ -32,14 +32,14 @@ jobs:
           FLASK_APP: backend/App/endPoints.py
           FLASK_ENV: development
 
-      - name: Create database directory
-        run: |
-          mkdir -p backend/App
+      # - name: Create database directory
+      #   run: |
+      #     mkdir -p backend/App
 
       - name: Check database path
         run: |
           echo "Database path: $(pwd)/backend/App/accounts.db"
-          touch backend/App/accounts.db
+          # touch backend/App/accounts.db
       
       - name: Run tests
         run: |
