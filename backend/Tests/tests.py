@@ -123,6 +123,7 @@ class TestClass:
         self.reset_database()
         response = requests.post(f"{URL}/register", json=self.user_payload, timeout=TIMEOUT)
         data = response.json()
+        assert response.status_code == 200
         user_id = data['id']
         requests.post(f"{URL}/logout", json={"id": user_id}, timeout=TIMEOUT)
         assert response.status_code == 200
