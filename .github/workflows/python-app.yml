@@ -43,4 +43,5 @@ jobs:
       
       - name: Run tests
         run: |
-          pytest backend/Tests/tests.py
+          cd backend/Tests
+          pytest tests.py
