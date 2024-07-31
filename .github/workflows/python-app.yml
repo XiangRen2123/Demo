@@ -35,8 +35,13 @@ jobs:
           touch backend/App/accounts.db
 
       - name: Start Flask server
+        # run: |
+        #   nohup python backend/App/endPoints.py &
+        # env:
+        #   FLASK_APP: backend/App/endPoints.py
+        #   FLASK_ENV: development
         run: |
-          nohup python backend/App/endPoints.py &
+          python backend/App/endPoints.py &
         env:
           FLASK_APP: backend/App/endPoints.py
           FLASK_ENV: development
