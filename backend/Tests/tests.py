@@ -42,33 +42,38 @@ class TestClass:
     @classmethod
     def reset_database(cls):
         """Method to reset the database before running tests."""
-        conn = sqlite3.connect(DB_PATH)
-      c = conn.cursor()
-      c.execute('DROP TABLE IF EXISTS accounts')
-      c.execute('''
-                CREATE TABLE accounts
-               (id TEXT PRIMARY KEY,
-                email TEXT,
-                firstName TEXT,
-                lastName TEXT,
-                password TEXT,
-                skills TEXT,
-                token TEXT,
-                resetCode TEXT)
-                ''')
-      c.execute('''DROP TABLE IF EXISTS career_path''')
-      c.execute('''CREATE TABLE career_path
-               (job_title TEXT,
-                job_level TEXT,
-                skills TEXT,
-                experience_years INTEGER,
-                experience_role TEXT)''')
-      conn.commit()
-   except sqlite3.Error as e:
-      api.abort(503)
-   finally:
-      if conn:
-         conn.close()
+        try:
+            conn = sqlite3.connect(DB_PATH)
+            c = conn.cursor()
+            c.execute('DROP TABLE IF EXISTS accounts')
+            c.execute('''
+                CREATE TABLE accounts (
+                    id TEXT PRIMARY KEY,
+                    email TEXT,
+                    firstName TEXT,
+                    lastName TEXT,
+                    password TEXT,
+                    skills TEXT,
+                    token TEXT,
+                    resetCode TEXT
+                )
+            ''')
+            c.execute('DROP TABLE IF EXISTS career_path')
+            c.execute('''
+                CREATE TABLE career_path (
+                    job_title TEXT,
+                    job_level TEXT,
+                    skills TEXT,
+                    experience_years INTEGER,
+                    experience_role TEXT
+                )
+            ''')
+            conn.commit()
+        except sqlite3.Error as e:
+            raise Exception(f"Database error: {e}")
+        finally:
+            if conn:
+                conn.close()
         
     def test_signup_success(self):
         """Test signup success"""
