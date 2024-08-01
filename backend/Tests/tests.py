@@ -42,11 +42,14 @@ class TestClass:
     @classmethod
     def reset_database(cls):
         """Method to reset the database before running tests."""
-        if os.path.exists(DB_PATH):
-            os.remove(DB_PATH)
         conn = sqlite3.connect(DB_PATH)
         cursor = conn.cursor()
+        
+        # Drop existing tables
         cursor.execute('DROP TABLE IF EXISTS accounts')
+        cursor.execute('DROP TABLE IF EXISTS career_path')
+        
+        # Create new tables
         cursor.execute('''
             CREATE TABLE accounts (
                 id TEXT PRIMARY KEY,
@@ -59,7 +62,6 @@ class TestClass:
                 resetCode TEXT
             )
         ''')
-        cursor.execute('''DROP TABLE IF EXISTS career_path''')
         cursor.execute('''
             CREATE TABLE career_path (
                 job_title TEXT,
@@ -69,8 +71,10 @@ class TestClass:
                 experience_role TEXT
             )
         ''')
+        
         conn.commit()
         conn.close()
+        
     def test_signup_success(self):
         """Test signup success"""
         self.reset_database()
